@@ -1,17 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import styled from "styled-components";
+import Picker from "./Picker";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import { GlobalStyle } from "./GlobalStyle";
+import Head from "./head";
+import "./index.css";
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+function App() {
+  return (
+    <>
+      <Head />
+      <GlobalStyle />
+      <div className="wrapper">
+        <div className="wrapper_inner">
+          <Picker />
+          <div className="value_holder">
+            <h6 className="Headding_values">RGB Values</h6>
+            <div className="values_main_container">Hello</div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
