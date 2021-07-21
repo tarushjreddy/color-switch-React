@@ -1,24 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import styled from "styled-components";
+
 import Picker from "./Picker";
 
 import { GlobalStyle } from "./GlobalStyle";
 import Head from "./head";
 import "./index.css";
+import ValueReader from "./ValueReader";
 
 function App() {
   return (
     <>
       <Head />
       <GlobalStyle />
-      <div className="wrapper">
-        <div className="wrapper_inner">
-          <Picker />
-          <div className="value_holder">
-            <h6 className="Headding_values">RGB Values</h6>
-            <div className="values_main_container">Hello</div>
+      <div className="divider">
+        <div className="wrapper">
+          <div className="wrapper_inner">
+            <p>Click on the color switch</p>
+            <Picker />
           </div>
+        </div>
+        <div className="wrapper" id="divone">
+          color shades
         </div>
       </div>
     </>
