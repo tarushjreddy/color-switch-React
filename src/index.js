@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
 import Picker from "./Picker";
@@ -9,6 +9,9 @@ import "./index.css";
 import ValueReader from "./ValueReader";
 
 function App() {
+  const [changedHex, changeHex] = useState("");
+  const [changedHsl, changeHsl] = useState("");
+  const [changedRgb, changeRgb] = useState("");
   function LightenDarkenColor(col, amt) {
     col = parseInt(col, 16);
     return (
@@ -22,17 +25,24 @@ function App() {
   console.log(LightenDarkenColor("3F6D2A", 40));
   return (
     <>
-      <Head />
+      <Head shadowcolor={changedHex} />
       <GlobalStyle />
       <div className="divider">
         <div className="wrapper">
           <div className="wrapper_inner">
             <p>Click on the color switch</p>
-            <Picker />
+            <Picker
+              changeHex={(word) => changeHex(word)}
+              changeRgb={(word) => changeRgb(word)}
+              changeHsl={(word) => changeHsl(word)}
+            />
+            <ValueReader Value={changedRgb} main_header="RGB Values" />
+            <ValueReader Value={changedHsl} main_header="HSLA Values" />
+            <ValueReader Value={changedHex} main_header="HEX Values" />
           </div>
         </div>
         <div className="wrapper" id="divone">
-          color shades
+          Color shades coming soon
         </div>
       </div>
     </>

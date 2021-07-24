@@ -13,6 +13,7 @@ export const PickerWrapper = styled.div`
   .swatch {
     width: 20rem;
     height: 20rem;
+    transition: background 0.5s ease-in-out;
     background: ${(p) => p.color};
   }
 `;
@@ -53,10 +54,11 @@ function computeSquareXY(s, l) {
   return [x, y];
 }
 
-const Picker = () => {
+const Picker = (props) => {
   const [show, setShow] = useState(false);
   const [ColorList, setColorList] = useState([]);
   const [hexval, sethexval] = useState("");
+  const [hwb, sethwb] = useState("");
   const [hue, setHue] = useState(180);
   const [hueX, setHueX] = useState(() => squareSize / 2 - barSize / 2);
   const [square, setSquare] = useState([100, 50]);
@@ -67,7 +69,7 @@ const Picker = () => {
   ]);
   const [offsetTop, setOffsetTop] = useState(0);
   const [offsetLeft, setOffsetLeft] = useState(0);
-  const [color, setColor] = useState(`hsla(180, 100%, 50%, 1)`);
+  const [color, setColor] = useState(`hsla(31, 82%, 51%, 1)`);
   const [animate, setAnimate] = useState(false);
 
   const modal = useRef(null);
@@ -169,7 +171,11 @@ const Picker = () => {
     if (v === w) return { h: 0, w: w, b: black };
     f = r === w ? g - b : g === w ? b - r : r - g;
     i = r === w ? 3 : g === w ? 5 : 1;
-    console.log({ h: ((i - f / (v - w)) / 6) * 100, w: w, b: black });
+    sethwb(
+      `h:${((i - f / (v - w)) / 6) * 100}, w: ${parseFloat(w)},  b:${parseFloat(
+        black
+      )} }`
+    );
 
     return { h: (i - f / (v - w)) / 6, w: w, b: black };
   }
@@ -177,7 +183,13 @@ const Picker = () => {
   return (
     <>
       <PickerWrapper color={color}>
-        <div className="swatch" onClick={() => setShow(true)} />
+        <div
+          className="swatch"
+          onClick={() => {
+            setShow(true);
+          }}
+        />
+
         <Modal modal={modal} show={show} onClose={() => setShow(false)}>
           <PickerOuter>
             <PickerInner>
@@ -199,7 +211,7 @@ const Picker = () => {
                 setHue={setHue}
                 setAnimate={setAnimate}
               />
-              <Inputs>
+              {/* <Inputs>
                 <Input
                   label="H"
                   value={hue}
@@ -259,6 +271,7 @@ const Picker = () => {
                   marginTop: "1.2rem",
                 }}
               >
+             
                 <Input
                   label="Hex"
                   value={hexval}
@@ -267,7 +280,18 @@ const Picker = () => {
                   defaultValue={180}
                   setValue={onHueChange}
                 />
-              </Inputs>
+              </Inputs> */}
+              {
+                (props.changeHex(hexval),
+                props.changeRgb(
+                  `rgb(${parseInt(rgb[1], 16)},
+                   ${parseInt(rgb[2], 16)},
+                    ${parseInt(rgb[3], 16)})`
+                ),
+                props.changeHsl(
+                  `hsla(${hue}, ${square[0]}%, ${square[1]}%, 1)`
+                ))
+              }
             </PickerInner>
           </PickerOuter>
         </Modal>

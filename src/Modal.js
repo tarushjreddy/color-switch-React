@@ -1,14 +1,14 @@
-import React from "react"
-import styled, { keyframes } from "styled-components"
+import React from "react";
+import styled, { keyframes } from "styled-components";
 
 const zoom = keyframes`
   from {
-    transform: scale(0) translate(-50%, -50%);
+    transform: scale(0) translate(-50%, -0%);
   }
   to {
     transform: scale(1) translate(-50%, -50%);
   }
-`
+`;
 
 export const Backdrop = styled.div`
   position: fixed;
@@ -17,9 +17,9 @@ export const Backdrop = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  display: ${p => (p.show ? "block" : "none")};
+  display: ${(p) => (p.show ? "block" : "none")};
   background: rgba(0, 0, 0, 0.3);
-`
+`;
 
 export const ModalWrapper = styled.div`
   position: fixed;
@@ -30,9 +30,9 @@ export const ModalWrapper = styled.div`
   transform-origin: left top;
   max-width: 100%;
   height: auto;
-  display: ${p => (p.show ? "block" : "none")};
-  animation: ${zoom} 0.2s;
-`
+  display: ${(p) => (p.show ? "block" : "none")};
+  animation: ${zoom} 0.9s;
+`;
 const Modal = ({ modal, show, onClose, children }) => {
   return (
     <>
@@ -41,7 +41,7 @@ const Modal = ({ modal, show, onClose, children }) => {
         {children}
       </ModalWrapper>
     </>
-  )
-}
+  );
+};
 
-export default Modal
+export default Modal;

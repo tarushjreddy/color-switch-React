@@ -1,29 +1,29 @@
-import React, { useRef, useEffect } from "react"
-import styled from "styled-components"
-import throttle from "lodash.throttle"
-import Svg from "./Svg"
-import usePaintHue from "./usePaintHue"
-import config from "./config"
+import React, { useRef, useEffect } from "react";
+import styled from "styled-components";
+import throttle from "lodash.throttle";
+import Svg from "./Svg";
+import usePaintHue from "./usePaintHue";
+import config from "./config";
 
-const { squareSize, barSize, delay } = config
+const { squareSize, barSize, delay } = config;
 
 export const HueWrapper = styled.div`
   position: relative;
   width: ${squareSize + "px"};
   height: ${barSize + "px"};
   cursor: ew-resize;
-`
+`;
 
-export const Canvas = styled.canvas.attrs(p => ({
+export const Canvas = styled.canvas.attrs((p) => ({
   width: squareSize,
-  height: barSize
-}))``
+  height: barSize,
+}))``;
 
-export const Handle = styled.div.attrs(p => ({
+export const Handle = styled.div.attrs((p) => ({
   style: {
     left: p.left + "px",
-    transition: p.animate ? "left .2s ease-out" : "0s"
-  }
+    transition: p.animate ? "left .2s ease-out" : "0s",
+  },
 }))`
   position: absolute;
   top: 0px;
@@ -37,13 +37,13 @@ export const Handle = styled.div.attrs(p => ({
     width: 100%;
     height: 100%;
   }
-`
+`;
 
 const Hue = ({ hueX, offsetLeft, animate, setHueX, setHue, setAnimate }) => {
-  const bar = useRef(null)
-  const canvas = useRef(null)
+  const bar = useRef(null);
+  const canvas = useRef(null);
 
-  usePaintHue(canvas)
+  usePaintHue(canvas);
 
   useEffect(() => {
     function computePosition(e) {
@@ -53,45 +53,45 @@ const Hue = ({ hueX, offsetLeft, animate, setHueX, setHue, setAnimate }) => {
           e.clientX - offsetLeft + squareSize / 2 - barSize / 2,
           squareSize - barSize / 2
         )
-      )
+      );
     }
 
     function computeHue(x) {
-      return Math.round((x + barSize / 2) * (360 / squareSize))
+      return Math.round((x + barSize / 2) * (360 / squareSize));
     }
 
-    const onMouseMove = throttle(e => {
-      const x = computePosition(e)
-      const hue = computeHue(x)
+    const onMouseMove = throttle((e) => {
+      const x = computePosition(e);
+      const hue = computeHue(x);
 
-      setHueX(x)
-      setHue(hue)
-    }, delay)
+      setHueX(x);
+      setHue(hue);
+    }, delay);
 
     function onMouseUp(e) {
-      const x = computePosition(e)
-      const hue = computeHue(x)
-      setHueX(x)
-      setHue(hue)
-      document.body.removeEventListener("mousemove", onMouseMove)
-      document.body.removeEventListener("mouseup", onMouseUp)
+      const x = computePosition(e);
+      const hue = computeHue(x);
+      setHueX(x);
+      setHue(hue);
+      document.body.removeEventListener("mousemove", onMouseMove);
+      document.body.removeEventListener("mouseup", onMouseUp);
     }
 
     function onMouseDown(e) {
-      setAnimate(false)
-      document.body.addEventListener("mousemove", onMouseMove)
-      document.body.addEventListener("mouseup", onMouseUp)
+      setAnimate(false);
+      document.body.addEventListener("mousemove", onMouseMove);
+      document.body.addEventListener("mouseup", onMouseUp);
     }
 
-    const barRef = bar.current
-    barRef.addEventListener("mousedown", onMouseDown)
+    const barRef = bar.current;
+    barRef.addEventListener("mousedown", onMouseDown);
 
     return () => {
-      barRef.removeEventListener("mousedown", onMouseDown)
-      document.body.removeEventListener("mousemove", onMouseMove)
-      document.body.removeEventListener("mouseup", onMouseUp)
-    }
-  }, [offsetLeft, setHue, setHueX, setAnimate])
+      barRef.removeEventListener("mousedown", onMouseDown);
+      document.body.removeEventListener("mousemove", onMouseMove);
+      document.body.removeEventListener("mouseup", onMouseUp);
+    };
+  }, [offsetLeft, setHue, setHueX, setAnimate]);
 
   return (
     <HueWrapper ref={bar}>
@@ -100,7 +100,7 @@ const Hue = ({ hueX, offsetLeft, animate, setHueX, setHue, setAnimate }) => {
       </Handle>
       <Canvas ref={canvas} />
     </HueWrapper>
-  )
-}
+  );
+};
 
-export default Hue
+export default Hue;
