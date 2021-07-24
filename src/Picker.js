@@ -55,6 +55,7 @@ function computeSquareXY(s, l) {
 
 const Picker = () => {
   const [show, setShow] = useState(false);
+  const [ColorList, setColorList] = useState([]);
   const [hexval, sethexval] = useState("");
   const [hue, setHue] = useState(180);
   const [hueX, setHueX] = useState(() => squareSize / 2 - barSize / 2);
@@ -110,6 +111,7 @@ const Picker = () => {
     setSquare([square[0], n]);
     setSquareXY(computeSquareXY(square[0], n));
   }
+
   function hslToHex(h, s, l) {
     l /= 100;
     const a = (s * Math.min(l, 1 - l)) / 100;
@@ -126,11 +128,20 @@ const Picker = () => {
   function hexToRgb(hex) {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     setrgb(result);
-    console.log(
-      parseInt(result[1], 16),
-      parseInt(result[2], 16),
-      parseInt(result[3], 16)
-    );
+
+    for (let index = 0; index < 100; index++) {
+      setColorList([
+        ...ColorList,
+        `rgba ${
+          (parseInt(result[1], 16),
+          parseInt(result[2], 16),
+          parseInt(result[3], 16),
+          Number(index / 100))
+        })
+       `,
+      ]);
+    }
+
     rgb2hwb(
       parseInt(result[1], 16),
       parseInt(result[2], 16),
@@ -162,6 +173,7 @@ const Picker = () => {
 
     return { h: (i - f / (v - w)) / 6, w: w, b: black };
   }
+
   return (
     <>
       <PickerWrapper color={color}>

@@ -9,6 +9,17 @@ import "./index.css";
 import ValueReader from "./ValueReader";
 
 function App() {
+  function LightenDarkenColor(col, amt) {
+    col = parseInt(col, 16);
+    return (
+      ((col & 0x0000ff) + amt) |
+      ((((col >> 8) & 0x00ff) + amt) << 8) |
+      (((col >> 16) + amt) << 16)
+    ).toString(16);
+  }
+
+  // TEST
+  console.log(LightenDarkenColor("3F6D2A", 40));
   return (
     <>
       <Head />
