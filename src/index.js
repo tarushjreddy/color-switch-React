@@ -30,7 +30,7 @@ function App() {
       <div className="divider">
         <div className="wrapper">
           <div className="wrapper_inner">
-            <p>Click on the color switch</p>
+            <p>Click on the color switch to edit</p>
             <Picker
               changeHex={(word) => changeHex(word)}
               changeRgb={(word) => changeRgb(word)}
